@@ -1,5 +1,3 @@
-/* W05: Programming Tasks */
-
 /* Declare and initialize global variables */
 
 const animeFeature = document.getElementById('animeFeature');
@@ -8,30 +6,26 @@ const animeQuotes = [];
 /* async displayAnimes Function */
 
 const displayAnimes = (animes) => {
-    animes.forEach(anime => {
-        let article = document.createElement('article');
-        let h3 = document.createElement('h3');
-        h3.textContent = anime.animeName;
-        let img = document.createElement('img');
-        img.src = anime.imageUrl;
-        img.alt = anime.animeName;
-        article.appendChild(h3);
-        article.appendChild(img)
-        animeFeature.appendChild(article);
-    });
-    // console.log(animeFeature)
 };
+
+// getAnimeFact using animeFacts API
+
+const getAnimeFact = async (animeName) => {
+    let response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/:${animeName}`);
+    console.log(await response.json())
+}
 
 /* async getAnimes Function using fetch()*/
 
-const getAnimes = async () => {
-    let response = await fetch('');
-    if (response.ok) {
-
-        animeList.push(await response.json());
+// const getAnimes = async () => {
+//     let response = await fetch('');
+//     if (response.ok) {
+//         await response.json().forEach(anime => {
+//             animeList.push(anime)
+//         });
         
-    };
-};
+//     };
+// };
 
 /* reset Function */
 
@@ -39,15 +33,19 @@ function reset() {
     animeFeature.innerHTML = '';
 };
 
-/* sortBy Function */
+/* selectAnime Function */
 
-function sortBy(animes) {
+function selectAnime(animes) {
     reset();
-    let filter = document.querySelector('#sortBy');
+    let filter = document.querySelector('#selectAnime');
     switch(filter.value) {
         case 'bleach':
+            var animeName = 'bleach';
+            return(animeName);
             break;
         case 'blackClover':
+            var animeName = 'black-clover';
+            return(animeName)
             break;
         case 'dragonBall':
             break;
@@ -62,8 +60,11 @@ function sortBy(animes) {
     };
 };
 
-getAnimes();
+// getAnimes();
 
 /* Event Listener */
 
-document.querySelector("#sortBy").addEventListener("change", () => { sortBy(templeList[0]) });
+document.querySelector("#selectAnime").addEventListener("change", () => {
+    // selectAnime()
+    getAnimeFact(selectAnime())
+});
