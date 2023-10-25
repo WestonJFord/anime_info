@@ -1,32 +1,31 @@
 /* Declare and initialize global variables */
 
 const animeFeature = document.getElementById('animeFeature');
-const animeQuotes = [];
+// const animeQuotes = [];
 
 /* async displayAnimes Function */
 
 const displayAnimes = (animes) => {
 };
 
-// getAnimeFact using animeFacts API
+// getAnimeQuote using animeQuotes API
 
-const getAnimeFact = async (animeName) => {
-    let response = await fetch(`https://anime-facts-rest-api.herokuapp.com/api/v1/:${animeName}`);
+const getAnimeQuote = async (animeName) => {
+    let response = await fetch(`https://animechan.xyz/api/random/anime?title=${animeName}`);
     console.log(await response.json())
 }
 
-/* async getAnimes Function using fetch()*/
-
-// const getAnimes = async () => {
-//     let response = await fetch('');
-//     if (response.ok) {
-//         await response.json().forEach(anime => {
-//             animeList.push(anime)
-//         });
-        
-//     };
-// };
-
+/*get list of animes with quotes available*/
+const getAvailableQuotes = async () => {
+    fetch('https://animechan.vercel.app/api/available/anime')
+    .then(response => response.json())
+    .then(animes => console.log(animes))
+    // let response = await fetch('');
+    // if (response.ok) {
+    //     console.log(await response.json())
+    //     // availableQuotesList.push(await response.json());
+    // }
+}
 /* reset Function */
 
 function reset() {
@@ -41,11 +40,11 @@ function selectAnime(animes) {
     switch(filter.value) {
         case 'bleach':
             var animeName = 'bleach';
-            return(animeName);
+            getAnimeQuote(animeName);
             break;
         case 'blackClover':
             var animeName = 'black-clover';
-            return(animeName)
+            getAnimeQuote(animeName);
             break;
         case 'dragonBall':
             break;
@@ -60,11 +59,10 @@ function selectAnime(animes) {
     };
 };
 
-// getAnimes();
+getAvailableQuotes()
 
 /* Event Listener */
 
 document.querySelector("#selectAnime").addEventListener("change", () => {
-    // selectAnime()
-    getAnimeFact(selectAnime())
+    selectAnime()
 });
